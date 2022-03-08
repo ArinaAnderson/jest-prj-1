@@ -1,85 +1,41 @@
 import readlineSync from 'readline-sync';
 
-import greet from './greet.js';
+const roundsNum = 3;
 
-const roundTotalNum = 3;
-// let correctAnswersCount = 0;
-
-/*
-const getOption = (getOptionCallback) => getOptionCallback();
-const getCorrectResult = (getCorrectResCallback, input) => getCorrectResCallback(input);
-*/
-
-// const getGameParamsGenerators = (getGameParamsCallback) => getGameParamsCallback();
-const setGameParams = (callback) => callback();
+const setGameParams = (setGameParamsCallback) => setGameParamsCallback();
 const checkRespond = (correctVal, respond) => correctVal === respond;
 const formQuestion = (option) => `Question: ${option}`;
-/*
-const formFeedback = (correctVal, respond, gamer) => {
-  const isCorrect = checkRespond(correctVal, respond);
-  if (isCorrect) {
-    return 'Correct!';
-  }
-  return `'${respond}' is wrong answer ;(. Correct answer was '${correctVal}'.\n
-    Let's try again, ${gamer}!`;
-};
-*/
 
 const getRespond = () => {
   const respond = readlineSync.question('Your answer: ');
-  console.log(typeof respond);
-  return Number.isNaN(parseInt(respond, 10)) ? respond : parseInt(respond, 10);
+  return respond;
 };
 
 const setGame = (title, setGameParamsCallback) => {
-  let roundCount = 0;
-  const gamer = greet();
-  console.log(title);
-  while (roundCount < roundTotalNum) {
-    /*
-    const gameParams = getGameParams(getGameParamsCallback);
-    const question = formQuestion(gameParams.option);
-    console.log(question);
-    const respond = getRespond();
-    const feedback = formFeedback(gameParams.correctResult, respond, gamer);
-    console.log(feedback);
+  let roundsCount = 0;
 
-    if (feedback === 'Correct!') {
-      correctAnswersCount += 1;
-    } else {
-      return;
-    }
-  }
-  console.log(`Congratulations, ${gamer}!`);
-  */
-    // const gameGenerators = getGameParams(getGameParamsCallback);
+  console.log('Welcome to the Brain Games!');
+  const gamerName = readlineSync.question('May I have your name? ');
+  console.log(`Hello, ${gamerName}`);
+
+  console.log(title);
+  while (roundsCount < roundsNum) {
     const gameGenerators = setGameParams(setGameParamsCallback);
     const option = gameGenerators.generateOption();
-    const correctRes = gameGenerators.generateCorrectResult();
-
+    const correctVal = gameGenerators.generateCorrectResult(option);
     const question = formQuestion(option);
     console.log(question);
     const respond = getRespond();
-    // const feedback = formFeedback(correctResult, respond, gamer);
-    const isCorrect = checkRespond(correctRes, respond);
+    const isCorrect = checkRespond(typeof correctVal === 'string' ? correctVal : correctVal.toString(10), respond);
     if (isCorrect) {
-      roundCount += 1;
+      roundsCount += 1;
       console.log('Correct!');
     } else {
-      console.log(`'${respond}' is wrong answer ;(. Correct answer was '${correctRes}'.\nLet's try again, ${gamer}!`);
+      console.log(`'${respond}' is wrong answer ;(. Correct answer was '${correctVal}'.\nLet's try again, ${gamerName}!`);
       return;
     }
-
-    /*
-    console.log(feedback);
-    if (feedback === 'Correct!') {
-      roundCount += 1;
-    } else {
-      return;
-    }
-    */
   }
-  console.log(`Congratulations, ${gamer}!`);
+  console.log(`Congratulations, ${gamerName}!`);
 };
 
 export default setGame;

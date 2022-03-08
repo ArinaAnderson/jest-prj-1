@@ -1,6 +1,6 @@
 import setGame from '../index.js';
 
-import { getRandomNumber } from '../utils.js';
+import getRandomNumber from '../utils.js';
 
 const QUESTION_TITLE = 'Answer "yes" if the number is even, otherwise answer "no".';
 const numberMaxVal = 100;
