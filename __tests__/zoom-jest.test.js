@@ -1,4 +1,4 @@
-import getSquare from '../zoom-jest.js';
+import { getSquare } from '../zoom-jest.js';
 
 test('getSquare', () => {
   expect(getSquare(0)).toBe(0);
