@@ -14,6 +14,6 @@ const defineCatSign = (pattern) => {
 };
 
 console.log(defineCatSign('calico'));
-console.log(defineCatSign('white'));
+// console.log(defineCatSign('white'));
 
 export default defineCatSign;
